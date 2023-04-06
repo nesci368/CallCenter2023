@@ -153,6 +153,7 @@ public class Contacto {
 		/*
 		 * Registra una nueva llamada asociada al contacto actual.
 		 */
+		if()
 		return false;
 	}
 	
@@ -161,7 +162,9 @@ public class Contacto {
 		 * Muestra los datos de un contacto, entre los que se debe incluir el registro de las llamadas realizadas.
 		 */
 		
-		return "";
+		return "El cpntacto agregado de nombre y apellido " + getNombre() + " " + getApellido() +
+				" con el numero de celular " + getCelular() + " de domicilio " + getDireccion() +
+				" con el mail " + getEmail() + " con codigo postal " + getCodigoPostal(); 
 	}
 	
 	

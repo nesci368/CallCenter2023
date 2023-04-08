@@ -18,15 +18,16 @@ public class Contacto {
 	
 	private String apellido;
 	private String nombre;
-	private String celular;
+	private int celular;
 	private String email;
 	private String direccion;
 	private int codigoPostal;
 	private String localidad;
 	private boolean esCliente;
 	private boolean volverALlamar;
+	private Llamada nuevaLlamada[];
 	
-	public Contacto(String apellido, String nombre, String celular, String email,String direccion
+	public Contacto(String apellido, String nombre, int celular, String email,String direccion
 			,int codigoPostal, String localidad, boolean esCliente, boolean volverALlamar) {
 		
 		this.apellido = apellido;
@@ -38,6 +39,7 @@ public class Contacto {
 		this.localidad = localidad;
 		this.esCliente = false;
 		this.volverALlamar = true;
+		this.nuevaLlamada = new Llamada[celular];
 		
 	}
 	
@@ -62,12 +64,12 @@ public class Contacto {
 	}
 
 
-	public String getCelular() {
+	public int getCelular() {
 		return celular;
 	}
 
 
-	public void setCelular(String celular) {
+	public void setCelular(int celular) {
 		this.celular = celular;
 	}
 
@@ -153,8 +155,17 @@ public class Contacto {
 		/*
 		 * Registra una nueva llamada asociada al contacto actual.
 		 */
-		if()
-		return false;
+		boolean seRegistro = false;
+		for(int i = 0; i < nuevaLlamada.length; i++) {
+			if(nuevaLlamada == null && celular != 0) {
+				seRegistro = true;
+			}
+			else {
+				seRegistro = false;
+			}
+		}
+		
+		return seRegistro;
 	}
 	
 	public String toString() {

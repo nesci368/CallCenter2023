@@ -16,168 +16,121 @@ public class Contacto {
 	 * �	Desea ser llamado nuevamente (Si o No): Inicialmente se carga en �Si�.
 	 */
 	
-	private String apellido;
-	private String nombre;
-	private int celular;
-	private String email;
-	private String direccion;
+	private String nombre ;
+	private String apellido ;
+	private long celular;
+	private String email ;
+	private String direccion ;
 	private int codigoPostal;
-	private String localidad;
-	private boolean esCliente;
-	private boolean volverALlamar;
-	private Llamada nuevaLlamada[];
-	
-	public Contacto(String apellido, String nombre, int celular, String email,String direccion
-			,int codigoPostal, String localidad, boolean esCliente, boolean volverALlamar) {
-		
-		this.apellido = apellido;
+	private Provincia provincia;
+	private boolean cliente = false;
+	private boolean llamadoNuevamente = true;
+	private static int contadorDeArrobas = 0, contadorDePuntos = 0, contadorDeLlamadas = 5;
+	private Llamada[] llamadas;
+
+	public Contacto(String nombre, String apellido, long celular, String email, String direccion, int codigoPostal,
+			Provincia provincia) {
+		this.email = email ;
 		this.nombre = nombre;
+		this.apellido = apellido;
 		this.celular = celular;
-		this.email = email;
 		this.direccion = direccion;
 		this.codigoPostal = codigoPostal;
-		this.localidad = localidad;
-		this.esCliente = false;
-		this.volverALlamar = true;
-		this.nuevaLlamada = new Llamada[celular];
+		this.provincia = provincia;
+		this.cliente = false;
+		this.llamadoNuevamente = true;
+		llamadas = new Llamada[contadorDeLlamadas];
+	}
+
+	/*
+	 * Eval�a si un String determinado puede ser almacenado como E-MAIL.
+	 */
+	
+	public boolean esEmailValido(String eMail) {
 		
+		for (int i = 0; i < eMail.length(); i++) {
+			if (eMail.charAt(i) == '@') {
+				contadorDeArrobas++;
+			}
+			if (eMail.charAt(i) == '.') {
+				contadorDePuntos++;
+			}
+		}
+		if (contadorDePuntos >= 1 && contadorDeArrobas == 1) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
+	public boolean registrarNuevaLlamada(Llamada nueva) {
+		/*
+		 * Registra una nueva llamada asociada al contacto actual.
+		 */
+System.out.println(" funca66 contacto");
+		Boolean registro = false;
+		System.out.println(llamadas.length);
+
+		for (int i = 0; i < llamadas.length; i++) {
+			if (this.llamadas[i] == null) {
+				this.llamadas[i] = nueva;
+
+				registro = true;
+				break;
+			}
+		}
+
+		return registro;
+	}
+	
+
+	public void mostrarLlamadas() {
+
+		for (int i = 0; i < llamadas.length; i++) {
+			if (this.llamadas[i] != null)
+				System.out.println(this.llamadas[i].toString());
+		}
+
 	}
 	
 	
-	public String getApellido() {
-		return apellido;
+	public String toString() {
+		/*
+		 * Muestra los datos de un contacto, entre los que se debe incluir el registro
+		 * de las llamadas realizadas.
+		 */
+		String mensaje = "Datos del contacto: " + "\n" + "Nombre y Apellido: " + nombre + " " + apellido + "\n"				+ "Celular: " + celular + "\n" + "Email: " + email + "\n" + "Direccion: " + direccion + "\n"
+				+ "Provincia: " + provincia + "\n" + "Cliente: " + cliente + "\n";
+
+		for (int i = 0; i < contadorDeLlamadas; i++) {
+			mensaje += llamadas[i];
+		}
+		return mensaje;
 	}
-
-
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
-	}
-
-
-	public String getNombre() {
-		return nombre;
-	}
-
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-
-	public int getCelular() {
-		return celular;
-	}
-
-
-	public void setCelular(int celular) {
-		this.celular = celular;
-	}
-
 
 	public String getEmail() {
 		return email;
 	}
 
-
-	public void setEmail(String email) {
-		this.email = email;
+	public boolean getEsCliente() {
+		return cliente;
 	}
 
-
-	public String getDireccion() {
-		return direccion;
+	public boolean getLlamadoNuevamente() {
+		return llamadoNuevamente;
 	}
-
-
-	public void setDireccion(String direccion) {
-		this.direccion = direccion;
-	}
-
 
 	public int getCodigoPostal() {
 		return codigoPostal;
 	}
 
-
-	public void setCodigoPostal(int codigoPostal) {
-		this.codigoPostal = codigoPostal;
-	}
-
-
-	public String getLocalidad() {
-		return localidad;
-	}
-
-
-	public void setLocalidad(String localidad) {
-		this.localidad = localidad;
-	}
-
-
-	public boolean isEsCliente() {
-		return esCliente;
-	}
-
-
-	public void setEsCliente(boolean esCliente) {
-		this.esCliente = esCliente;
-	}
-
-
-	public boolean isVolverALlamar() {
-		return volverALlamar;
-	}
-
-
-	public void setVolverALlamar(boolean volverALlamar) {
-		this.volverALlamar = volverALlamar;
-	}
-
-
-	public void esEmailValido(String eMail) {
-		
-		boolean emailValido = false;
-		char arroba = '@';
-		int pos = eMail.indexOf(arroba);
-		/*
-		 * Eval�a si un String determinado puede ser almacenado como E-MAIL.
-		 */
-		if(eMail.length() > 15 && pos != -1 && pos > 6) {
-			emailValido = true;
-		}
-		
-		else {
-			emailValido = false;
-		}
+	public void setCliente(boolean esCliente) {
+		this.cliente = esCliente;
 	}
 	
-	public boolean registrarNuevaLlamada(Llamada nueva) {
-		/*
-		 * Registra una nueva llamada asociada al contacto actual.
-		 */
-		boolean seRegistro = false;
-		for(int i = 0; i < nuevaLlamada.length; i++) {
-			if(nuevaLlamada == null && celular != 0) {
-				seRegistro = true;
-			}
-			else {
-				seRegistro = false;
-			}
-		}
-		
-		return seRegistro;
+	public void setLlamadoNuevamente (boolean noLlamar) {
+		this.llamadoNuevamente = noLlamar;
 	}
-	
-	public String toString() {
-		/*
-		 * Muestra los datos de un contacto, entre los que se debe incluir el registro de las llamadas realizadas.
-		 */
-		
-		return "El cpntacto agregado de nombre y apellido " + getNombre() + " " + getApellido() +
-				" con el numero de celular " + getCelular() + " de domicilio " + getDireccion() +
-				" con el mail " + getEmail() + " con codigo postal " + getCodigoPostal(); 
-	}
-	
-	
 	
 }
